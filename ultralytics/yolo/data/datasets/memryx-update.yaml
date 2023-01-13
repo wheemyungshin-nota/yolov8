@@ -1,0 +1,13 @@
+# Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
+path: ../data  # dataset root dir
+train: [wider_face_updated/train.txt, wider_face_updated/val.txt, 
+crowd/train.txt, crowd/val.txt,
+AIHUB_updated/valid_train_updated.txt,
+coco_face_from_kpts/train.txt, coco_face_from_kpts/val.txt]  # 89977 images
+val: [coco_face_from_kpts/val.txt]   # 5884 images
+test: [coco_face_from_kpts/val.txt]   # 5884
+
+# Classes
+names:
+  0: person
+  1: bicycle
