@@ -26,6 +26,8 @@ RUN pip uninstall -y Pillow torchtext torch torchvision
 RUN pip install --no-cache ultralytics albumentations comet gsutil notebook Pillow>=9.1.0 \
     'opencv-python<4.6.0.66' \
     --extra-index-url https://download.pytorch.org/whl/cu113
+RUN pip uninstall torch torchvision torch-tensorrt -y
+RUN pip install torch==1.8.1 torchvision==0.9.1 torchaudio==0.8.1
 
 # Set environment variables
 ENV OMP_NUM_THREADS=1
