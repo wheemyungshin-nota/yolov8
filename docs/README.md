@@ -1,6 +1,10 @@
+---
+description: Learn how to install the Ultralytics package in developer mode and build/serve locally using MkDocs. Deploy your project to your host easily.
+---
+
 # Ultralytics Docs
 
-Deployed to https://docs.ultralytics.com
+Ultralytics Docs are deployed to [https://docs.ultralytics.com](https://docs.ultralytics.com).
 
 ### Install Ultralytics package
 

@@ -51,9 +51,9 @@ body:
       label: Environment
       description: Please specify the software and hardware you used to produce the bug.
       placeholder: |
-        - YOLO: YOLOv8 🚀 v6.0-67-g60e42e1 torch 1.9.0+cu111 CUDA:0 (A100-SXM4-40GB, 40536MiB)
+        - YOLO: Ultralytics YOLOv8.0.21 🚀 Python-3.8.10 torch-1.13.1+cu117 CUDA:0 (A100-SXM-80GB, 81251MiB)
         - OS: Ubuntu 20.04
-        - Python: 3.9.0
+        - Python: 3.8.10
     validations:
       required: false
 
@@ -62,7 +62,7 @@ body:
       label: Minimal Reproducible Example
       description: >
         When asking a question, people will be better able to provide help if you provide code that they can easily understand and use to **reproduce** the problem.
-        This is referred to by community members as creating a [minimal reproducible example](https://stackoverflow.com/help/minimal-reproducible-example).
+        This is referred to by community members as creating a [minimal reproducible example](https://docs.ultralytics.com/help/minimum_reproducible_example/).
       placeholder: |
         ```
         # Code to reproduce your issue here
@@ -80,6 +80,6 @@ body:
       label: Are you willing to submit a PR?
       description: >
         (Optional) We encourage you to submit a [Pull Request](https://github.com/ultralytics/ultralytics/pulls) (PR) to help improve YOLOv8 for everyone, especially if you have a good understanding of how to implement a fix or feature.
-        See the YOLOv8 [Contributing Guide](https://github.com/ultralytics/ultralytics/blob/master/CONTRIBUTING.md) to get started.
+        See the YOLOv8 [Contributing Guide](https://docs.ultralytics.com/help/contributing) to get started.
       options:
         - label: Yes I'd like to help by submitting a PR!

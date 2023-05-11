@@ -45,8 +45,8 @@ changes** button. All done, your PR is now submitted to YOLOv8 for review and ap
 
 To allow your work to be integrated as seamlessly as possible, we advise you to:
 
-- ✅ Verify your PR is **up-to-date** with `ultralytics/ultralytics` `master` branch. If your PR is behind you can update
-  your code by clicking the 'Update branch' button or by running `git pull` and `git merge master` locally.
+- ✅ Verify your PR is **up-to-date** with `ultralytics/ultralytics` `main` branch. If your PR is behind you can update
+  your code by clicking the 'Update branch' button or by running `git pull` and `git merge main` locally.
 
 <p align="center"><img width="751" alt="Screenshot 2022-08-29 at 22 47 15" src="https://user-images.githubusercontent.com/26833433/187295893-50ed9f44-b2c9-4138-a614-de69bd1753d7.png"></p>
 
@@ -59,18 +59,20 @@ To allow your work to be integrated as seamlessly as possible, we advise you to:
 
 ### Docstrings
 
-Not all functions or classes require docstrings but when they do, we follow [google-stlye docstrings format](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings). Here is an example:
+Not all functions or classes require docstrings but when they do, we
+follow [google-style docstrings format](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings).
+Here is an example:
 
 ```python
 """
-   What the function does - performs nms on given detection predictions
+   What the function does. Performs NMS on given detection predictions.
 
     Args:
         arg1: The description of the 1st argument
         arg2: The description of the 2nd argument
 
     Returns:
-        What the function returns. Empty if nothing is returned
+        What the function returns. Empty if nothing is returned.
 
     Raises:
         Exception Class: When and why this exception can be raised by the function.
@@ -86,7 +88,7 @@ short guidelines below to help users provide what we need in order to get starte
 
 When asking a question, people will be better able to provide help if you provide **code** that they can easily
 understand and use to **reproduce** the problem. This is referred to by community members as creating
-a [minimum reproducible example](https://stackoverflow.com/help/minimal-reproducible-example). Your code that reproduces
+a [minimum reproducible example](https://docs.ultralytics.com/help/minimum_reproducible_example/). Your code that reproduces
 the problem should be:
 
 - ✅ **Minimal** – Use as little code as possible that still produces the same problem
@@ -97,17 +99,17 @@ In addition to the above requirements, for [Ultralytics](https://ultralytics.com
 should be:
 
 - ✅ **Current** – Verify that your code is up-to-date with current
-  GitHub [master](https://github.com/ultralytics/ultralytics/tree/main), and if necessary `git pull` or `git clone` a new
-  copy to ensure your problem has not already been resolved by previous commits.
+  GitHub [main](https://github.com/ultralytics/ultralytics/tree/main) branch, and if necessary `git pull` or `git clone`
+  a new copy to ensure your problem has not already been resolved by previous commits.
 - ✅ **Unmodified** – Your problem must be reproducible without any modifications to the codebase in this
   repository. [Ultralytics](https://ultralytics.com/) does not provide support for custom code ⚠️.
 
 If you believe your problem meets all of the above criteria, please close this issue and raise a new one using the 🐛
 **Bug Report** [template](https://github.com/ultralytics/ultralytics/issues/new/choose) and providing
-a [minimum reproducible example](https://stackoverflow.com/help/minimal-reproducible-example) to help us better
+a [minimum reproducible example](https://docs.ultralytics.com/help/minimum_reproducible_example/) to help us better
 understand and diagnose your problem.
 
 ## License
 
 By contributing, you agree that your contributions will be licensed under
-the [GPL-3.0 license](https://choosealicense.com/licenses/gpl-3.0/)
+the [AGPL-3.0 license](https://choosealicense.com/licenses/agpl-3.0/)
