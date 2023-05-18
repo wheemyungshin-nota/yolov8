@@ -1,0 +1,9 @@
+path: ../data
+train: [coco/train2017.txt, 
+cityscapes/yolov7_det/train_coco_indexing.txt, cityscapes/yolov7_det/val_coco_indexing.txt,
+AIHUB_CCTV_city_yolo_valid_crop_sampling/train.txt, AIHUB_CCTV_city_yolo_valid_crop_sampling/val.txt]
+val: [coco/val2017.txt] 
+test: [coco/val2017.txt]
+
+names:
+  0: person

@@ -1,3 +1,7 @@
+#new
+include_cls: []
+#origin
+
 task: detect
 mode: train
 model: weights/yolov8n.pt

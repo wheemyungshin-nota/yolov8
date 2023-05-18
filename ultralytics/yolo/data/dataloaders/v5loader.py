@@ -117,7 +117,8 @@ def create_dataloader(path,
                       min_items=0,
                       prefix='',
                       shuffle=False,
-                      seed=0):
+                      seed=0,
+                      include_cls=[]):
     if rect and shuffle:
         LOGGER.warning('WARNING ⚠️ --rect is incompatible with DataLoader shuffle, setting shuffle=False')
         shuffle = False
@@ -135,7 +136,8 @@ def create_dataloader(path,
             pad=pad,
             image_weights=image_weights,
             min_items=min_items,
-            prefix=prefix)
+            prefix=prefix,
+            include_cls=include_cls)
 
     batch_size = min(batch_size, len(dataset))
     nd = torch.cuda.device_count()  # number of CUDA devices
@@ -465,7 +467,8 @@ class LoadImagesAndLabels(Dataset):
                  stride=32,
                  pad=0.0,
                  min_items=0,
-                 prefix=''):
+                 prefix='',
+                 include_cls=[]):
         self.img_size = img_size
         self.augment = augment
         self.hyp = hyp
@@ -546,7 +549,8 @@ class LoadImagesAndLabels(Dataset):
         self.indices = range(n)
 
         # Update labels
-        include_class = [0]  # filter labels to include only these classes (optional)
+        include_class = include_cls  # filter labels to include only these classes (optional)
+        print("include_class: ", include_class)
         include_class_array = np.array(include_class).reshape(1, -1)
         for i, (label, segment) in enumerate(zip(self.labels, self.segments)):
             if include_class:
@@ -556,6 +560,11 @@ class LoadImagesAndLabels(Dataset):
                     self.segments[i] = [segment[si] for si, idx in enumerate(j) if idx]
             if single_cls:  # single-class training, merge all classes into 0
                 self.labels[i][:, 0] = 0
+        
+        convert_cls = {v : k for k, v in enumerate(include_class)}
+        for i, label in enumerate(self.labels):
+            for j in range(len(label)):
+                self.labels[i][j, 0] = convert_cls[self.labels[i][j, 0]]
 
         # Rectangular Training
         if self.rect:

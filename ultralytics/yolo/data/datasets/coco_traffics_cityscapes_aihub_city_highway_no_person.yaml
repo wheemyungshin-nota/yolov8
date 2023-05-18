@@ -1,0 +1,16 @@
+path: ../data
+train: [coco/train2017.txt, 
+cityscapes/yolov7_det/train_coco_indexing.txt, cityscapes/yolov7_det/val_coco_indexing.txt,
+AIHUB_CCTV_city_yolo_valid_crop_sampling/train.txt, AIHUB_CCTV_city_yolo_valid_crop_sampling/val.txt,
+AIHUB_CCTV_highway_yolo/val.txt]
+val: [coco/val2017.txt] 
+test: [coco/val2017.txt]
+
+names:
+  1: bicycle
+  2: car
+  3: motorcycle
+  5: bus
+  7: truck
+  9: traffic light
+  11: stop sign

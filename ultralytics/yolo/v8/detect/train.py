@@ -26,7 +26,6 @@ from ultralytics.yolo.utils.torch_utils import de_parallel, torch_distributed_ze
 
 # BaseTrainer python usage
 class DetectionTrainer(BaseTrainer):
-
     def build_dataset(self, img_path, mode='train', batch=None):
         """Build YOLO Dataset
 
@@ -59,7 +58,8 @@ class DetectionTrainer(BaseTrainer):
                                      close_mosaic=self.args.close_mosaic != 0,
                                      prefix=colorstr(f'{mode}: '),
                                      shuffle=mode == 'train',
-                                     seed=self.args.seed)[0]
+                                     seed=self.args.seed,
+                                     include_cls=self.args.include_cls)[0]
         assert mode in ['train', 'val']
         with torch_distributed_zero_first(rank):  # init dataset *.cache only once if DDP
             dataset = self.build_dataset(dataset_path, mode, batch_size)
@@ -236,18 +236,15 @@ class Loss:
         return loss.sum() * batch_size, loss.detach()  # loss(box, cls, dfl)
 
 
-def train(opt, use_python=True):
+def train(opt, use_python=False):
     """Train and optimize YOLO model given training data and device."""
-
-    print(opt)
-
     model = opt.model# or 'yolov8n.pt'
     data = opt.data# or 'coco128.yaml'  # or yolo.ClassificationDataset("mnist")
     device = opt.device if opt.device is not None else ''
 
     args = dict(model=model, data=data, device=device, 
         v5loader=opt.v5loader, epochs=opt.epochs, batch=opt.batch, imgsz=opt.imgsz, name=opt.name, single_cls=opt.single_cls,
-        workers=opt.workers)
+        workers=opt.workers, include_cls=opt.include_cls, val=(not opt.no_test))
     print(args)
     if use_python:
         from ultralytics import YOLO
@@ -267,7 +264,9 @@ if __name__ == '__main__':
     parser.add_argument('--imgsz', type=int, default=640, help='image size')
     parser.add_argument('--workers', type=int, default=8, help='number of workers')
     parser.add_argument('--name', default='exp', help='save to project/name')
+    parser.add_argument('--include-cls', nargs='+', type=int, default=[], help='train these classes only')
     parser.add_argument('--single-cls', action='store_true', help='target is single class')
+    parser.add_argument('--no-test', action='store_true', help='no test/validation durint training')
     opt = parser.parse_args()
 
     train(opt)

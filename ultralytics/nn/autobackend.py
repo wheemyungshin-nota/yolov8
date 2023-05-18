@@ -28,13 +28,14 @@ def check_class_names(names):
     if isinstance(names, dict):
         # Convert 1) string keys to int, i.e. '0' to 0, and non-string values to strings, i.e. True to 'True'
         names = {int(k): str(v) for k, v in names.items()}
+        #names = {int(k): str(v) for k, v in enumerate(list(names.values()))}
         n = len(names)
-        if max(names.keys()) >= n:
-            raise KeyError(f'{n}-class dataset requires class indices 0-{n - 1}, but you have invalid class indices '
-                           f'{min(names.keys())}-{max(names.keys())} defined in your dataset YAML.')
-        if isinstance(names[0], str) and names[0].startswith('n0'):  # imagenet class codes, i.e. 'n01440764'
-            map = yaml_load(ROOT / 'datasets/ImageNet.yaml')['map']  # human-readable names
-            names = {k: map[v] for k, v in names.items()}
+        #if max(names.keys()) >= n:
+        #    raise KeyError(f'{n}-class dataset requires class indices 0-{n - 1}, but you have invalid class indices '
+        #                   f'{min(names.keys())}-{max(names.keys())} defined in your dataset YAML.')
+        #if isinstance(names[0], str) and names[0].startswith('n0'):  # imagenet class codes, i.e. 'n01440764'
+        #    map = yaml_load(ROOT / 'datasets/ImageNet.yaml')['map']  # human-readable names
+        #    names = {k: map[v] for k, v in names.items()}
     return names
 
 

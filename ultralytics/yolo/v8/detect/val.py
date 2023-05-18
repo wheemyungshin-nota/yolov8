@@ -201,7 +201,8 @@ class DetectionValidator(BaseValidator):
                                      workers=self.args.workers,
                                      prefix=colorstr(f'{self.args.mode}: '),
                                      shuffle=False,
-                                     seed=self.args.seed)[0]
+                                     seed=self.args.seed,
+                                     include_cls=self.args.include_cls)[0]
 
         dataset = self.build_dataset(dataset_path, batch=batch_size, mode='val')
         dataloader = build_dataloader(dataset, batch_size, self.args.workers, shuffle=False, rank=-1)
