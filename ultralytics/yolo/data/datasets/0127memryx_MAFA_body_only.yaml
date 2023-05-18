@@ -1,5 +1,5 @@
 # Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
-path: ../../data  # dataset root dir
+path: ../data  # dataset root dir
 train: [wider_face_updated/train.txt, wider_face_updated/val.txt, 
 crowd/train.txt, crowd/val.txt,
 MAFA_concat/train.txt, MAFA_concat/val.txt,

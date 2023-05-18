@@ -173,6 +173,7 @@ class BaseTrainer:
             world_size = 0
 
         # Run subprocess if DDP training, else train normally
+        '''
         if world_size > 1 and 'LOCAL_RANK' not in os.environ:
             # Argument checks
             if self.args.rect:
@@ -189,6 +190,8 @@ class BaseTrainer:
                 ddp_cleanup(self, str(file))
         else:
             self._do_train(world_size)
+        '''
+        self._do_train(world_size)
 
     def _setup_ddp(self, world_size):
         """Initializes and sets the DistributedDataParallel parameters for training."""

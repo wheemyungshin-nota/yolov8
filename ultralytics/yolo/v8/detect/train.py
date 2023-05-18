@@ -1,9 +1,15 @@
 # Ultralytics YOLO 🚀, AGPL-3.0 license
+import argparse
+
 from copy import copy
 
 import numpy as np
 import torch
 import torch.nn as nn
+
+import os
+import sys
+sys.path.append(os.path.join(os.getcwd()))
 
 from ultralytics.nn.tasks import DetectionModel
 from ultralytics.yolo import v8
@@ -230,13 +236,19 @@ class Loss:
         return loss.sum() * batch_size, loss.detach()  # loss(box, cls, dfl)
 
 
-def train(cfg=DEFAULT_CFG, use_python=False):
+def train(opt, use_python=True):
     """Train and optimize YOLO model given training data and device."""
-    model = cfg.model or 'yolov8n.pt'
-    data = cfg.data or 'coco128.yaml'  # or yolo.ClassificationDataset("mnist")
-    device = cfg.device if cfg.device is not None else ''
 
-    args = dict(model=model, data=data, device=device)
+    print(opt)
+
+    model = opt.model# or 'yolov8n.pt'
+    data = opt.data# or 'coco128.yaml'  # or yolo.ClassificationDataset("mnist")
+    device = opt.device if opt.device is not None else ''
+
+    args = dict(model=model, data=data, device=device, 
+        v5loader=opt.v5loader, epochs=opt.epochs, batch=opt.batch, imgsz=opt.imgsz, name=opt.name, single_cls=opt.single_cls,
+        workers=opt.workers)
+    print(args)
     if use_python:
         from ultralytics import YOLO
         YOLO(model).train(**args)
@@ -244,6 +256,18 @@ def train(cfg=DEFAULT_CFG, use_python=False):
         trainer = DetectionTrainer(overrides=args)
         trainer.train()
 
-
 if __name__ == '__main__':
-    train()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model', type=str, default='weights/yolov8s.pt', help='initial weights path')
+    parser.add_argument('--data', type=str, default='ultralytics/yolo/data/datasets/coco.yaml', help='data.yaml path')
+    parser.add_argument('--device', default='cpu', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
+    parser.add_argument('--v5loader', action='store_true', help='assume maximum recall as 1.0 in AP calculation')
+    parser.add_argument('--epochs', type=int, default=100)
+    parser.add_argument('--batch', type=int, default=32, help='total batch size for all GPUs')
+    parser.add_argument('--imgsz', type=int, default=640, help='image size')
+    parser.add_argument('--workers', type=int, default=8, help='number of workers')
+    parser.add_argument('--name', default='exp', help='save to project/name')
+    parser.add_argument('--single-cls', action='store_true', help='target is single class')
+    opt = parser.parse_args()
+
+    train(opt)
