@@ -1,7 +1,11 @@
 # Ultralytics YOLO 🚀, AGPL-3.0 license
+import argparse
 
 import torch
 
+import os
+import sys
+sys.path.append(os.path.join(os.getcwd()))
 from ultralytics.yolo.engine.predictor import BasePredictor
 from ultralytics.yolo.engine.results import Results
 from ultralytics.yolo.utils import DEFAULT_CFG, ROOT, ops
@@ -29,13 +33,14 @@ class DetectionPredictor(BasePredictor):
         return results
 
 
-def predict(cfg=DEFAULT_CFG, use_python=False):
+def predict(opt, use_python=False):
     """Runs YOLO model inference on input image(s)."""
-    model = cfg.model or 'yolov8n.pt'
-    source = cfg.source if cfg.source is not None else ROOT / 'assets' if (ROOT / 'assets').exists() \
-        else 'https://ultralytics.com/images/bus.jpg'
+    model = opt.model
+    source = opt.source
+    name = opt.name
+    imgsz = opt.imgsz
 
-    args = dict(model=model, source=source)
+    args = dict(model=model, source=source, name=name, imgsz=imgsz)
     if use_python:
         from ultralytics import YOLO
         YOLO(model)(**args)
@@ -43,6 +48,11 @@ def predict(cfg=DEFAULT_CFG, use_python=False):
         predictor = DetectionPredictor(overrides=args)
         predictor.predict_cli()
 
-
 if __name__ == '__main__':
-    predict()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model', type=str, default='weights/yolov8s.pt', help='initial weights path')
+    parser.add_argument('--source', type=str, default='ultralytics/assets', help='data.yaml path')
+    parser.add_argument('--name', default='predict', help='save to project/name')
+    parser.add_argument('--imgsz', type=int, default=640, help='image size')
+    opt = parser.parse_args()
+    predict(opt)

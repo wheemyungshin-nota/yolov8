@@ -60,7 +60,7 @@ class LoadStreams:
             fps = cap.get(cv2.CAP_PROP_FPS)  # warning: may return 0 or nan
             self.frames[i] = max(int(cap.get(cv2.CAP_PROP_FRAME_COUNT)), 0) or float('inf')  # infinite stream fallback
             self.fps[i] = max((fps if math.isfinite(fps) else 0) % 100, 0) or 30  # 30 FPS fallback
-
+            
             success, self.imgs[i] = cap.read()  # guarantee first frame
             if not success or self.imgs[i] is None:
                 raise ConnectionError(f'{st}Failed to read images from {s}')
