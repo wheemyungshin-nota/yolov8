@@ -23,6 +23,8 @@ from ultralytics.yolo.utils.plotting import plot_images, plot_labels, plot_resul
 from ultralytics.yolo.utils.tal import TaskAlignedAssigner, dist2bbox, make_anchors
 from ultralytics.yolo.utils.torch_utils import de_parallel, torch_distributed_zero_first
 
+from ultralytics.yolo.utils import yaml_load
+
 
 # BaseTrainer python usage
 class DetectionTrainer(BaseTrainer):
@@ -240,11 +242,24 @@ def train(opt, use_python=False):
     """Train and optimize YOLO model given training data and device."""
     model = opt.model# or 'yolov8n.pt'
     data = opt.data# or 'coco128.yaml'  # or yolo.ClassificationDataset("mnist")
-    device = opt.device if opt.device is not None else ''
+    device = opt.device if opt.device is not None else ''    
 
-    args = dict(model=model, data=data, device=device, 
-        v5loader=opt.v5loader, epochs=opt.epochs, batch=opt.batch, imgsz=opt.imgsz, name=opt.name, single_cls=opt.single_cls,
-        workers=opt.workers, include_cls=opt.include_cls, val=(not opt.no_test))
+    cfg = yaml_load(opt.cfg)
+
+    args = cfg
+    args['model']=opt.model
+    args['data']=opt.data
+    args['device']=opt.device
+    args['v5loader']=opt.v5loader
+    args['epochs']=opt.epochs
+    args['batch']=opt.batch
+    args['imgsz']=opt.imgsz
+    args['name']=opt.name
+    args['single_cls']=opt.single_cls
+    args['workers']=opt.workers
+    args['include_cls']=opt.include_cls
+    args['val']=(not opt.no_test)
+    
     print(args)
     if use_python:
         from ultralytics import YOLO
@@ -256,6 +271,7 @@ def train(opt, use_python=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', type=str, default='weights/yolov8s.pt', help='initial weights path')
+    parser.add_argument('--cfg', type=str, default='ultralytics/yolo/cfg/default.yaml', help='config file path')
     parser.add_argument('--data', type=str, default='ultralytics/yolo/data/datasets/coco.yaml', help='data.yaml path')
     parser.add_argument('--device', default='cpu', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--v5loader', action='store_true', help='assume maximum recall as 1.0 in AP calculation')
